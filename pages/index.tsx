@@ -63,16 +63,14 @@ const FormInputFile: FC<{
           type="file"
           aria-invalid={error ? "true" : "false"}
           {...register(label, { required: true })}
-          className={`block  w-full text-sm text-gray-500
-                file:mr-4 file:py-2 file:px-4
-                file:border-0
-                file:text-sm file:font-semibold
-                file:bg-indigo-50 file:text-indigo-700
-                hover:file:bg-indigo-100
-                hover:cursor-pointer
-                file:hover:cursor-pointer
-                ${error ? errorClass : okClass}
-                `}
+          className={`
+            block w-full text-sm text-gray-500
+            file:mr-4 file:py-2 file:px-4 file:border-0
+            file:text-sm file:font-semibold
+            hover:cursor-pointer
+            file:hover:cursor-pointer
+            ${error ? errorClass : okClass}
+          `}
         />
       </label>
       <p
@@ -90,22 +88,24 @@ const Home: NextPage = () => {
   const {
     register,
     handleSubmit,
+    reset,
     formState: { errors },
   } = useForm<Inputs>();
   const onSubmit: SubmitHandler<Inputs> = ({ title, category, files }) => {
     const formData = new FormData();
     formData.append("file", files[0], files[0].name);
-
     formData.append("title", title);
     formData.append("category", category);
+    formData.append("synopsis", "default synopsis");
 
-    fetch("https://path/to/api", {
+    fetch("http://localhost:8080/api/admin/upload", {
       // content-type header should not be specified!
       method: "POST",
       body: formData,
     })
       .then((response) => response.json())
       .then((success) => {
+        reset();
         // Do something with the successful response
       })
       .catch((error) => console.log(error));
