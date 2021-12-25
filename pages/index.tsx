@@ -148,7 +148,7 @@ const Home: NextPage = () => {
             <button
               type="submit"
               disabled={Object.values(errors).length > 0}
-              className="mt-12 px-4 py-1 ml-auto bg-indigo-500 text-white disabled:opacity-50"
+              className="mt-4 px-4 py-1 ml-auto bg-indigo-500 text-white disabled:opacity-50"
             >
               submit
             </button>
